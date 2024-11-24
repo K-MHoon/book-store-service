@@ -1,0 +1,15 @@
+### Send POST request with json body
+POST http://localhost:8080/books
+Content-Type: application/json
+
+{
+  "author": "BlackShiba",
+  "title": "시바의 모험",
+  "isbn": "1234567891",
+  "price": 9.90
+}
+
+### GET request with a header
+GET http://localhost:8080/books/1234567891
+Content-Type: application/json
+Accept: application/json
