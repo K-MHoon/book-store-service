@@ -19,6 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Builder
 public class Book {
 
         @Id
@@ -69,4 +70,12 @@ public class Book {
         public final int hashCode() {
                 return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
         }
+
+        public void updateAll(String title, String author, Double price, String publisher) {
+                this.title = title;
+                this.author = author;
+                this.price = price;
+                this.publisher = publisher;
+        }
+
 }
