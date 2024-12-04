@@ -17,7 +17,12 @@ class CatalogServiceApplicationTests {
     @Test
     void whenGetRequestWithIdThenBookReturned() {
         var bookIsbn = "1231231230";
-        var bookToCreate = new Book(bookIsbn, "Title", "Author", 9.90);
+        var bookToCreate = Book.builder()
+                .isbn(bookIsbn)
+                .title("Title")
+                .author("Author")
+                .price(9.90)
+                .build();
         Book expectedBook = webTestClient.post()
                 .uri("/books")
                 .bodyValue(bookToCreate)
@@ -32,7 +37,7 @@ class CatalogServiceApplicationTests {
                 .expectStatus().is2xxSuccessful()
                 .expectBody(Book.class).value(actualBook -> {
                     assertThat(actualBook).isNotNull();
-                    assertThat(actualBook.isbn()).isEqualTo(expectedBook.isbn());
+                    assertThat(actualBook.getIsbn()).isEqualTo(expectedBook.getIsbn());
                 });
     }
 

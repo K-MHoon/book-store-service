@@ -25,14 +25,24 @@ class BookValidationTest {
 
     @Test
     void whenAllFieldsCorrectThenValidationSucceeds() {
-        var book = new Book("1234567890", "Title", "Author", 9.90);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("Title")
+                .author("Author")
+                .price(9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).isEmpty();
     }
 
     @Test
     void whenIsbnNotDefinedThenValidationFails() {
-        var book = new Book("", "Title", "Author", 9.90);
+        var book = Book.builder()
+                .isbn("")
+                .title("Title")
+                .author("Author")
+                .price(9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(2);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -41,7 +51,12 @@ class BookValidationTest {
 
     @Test
     void whenIsbnDefinedButIncorrectThenValidationFails() {
-        var book = new Book("a234567890", "Title", "Author", 9.90);
+        var book = Book.builder()
+                .isbn("a234567890")
+                .title("Title")
+                .author("Author")
+                .price(9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -50,7 +65,12 @@ class BookValidationTest {
 
     @Test
     void whenTitleIsNotDefinedThenValidationFails() {
-        var book = new Book("1234567890", "", "Author", 9.90);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("")
+                .author("Author")
+                .price(9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -59,7 +79,12 @@ class BookValidationTest {
 
     @Test
     void whenAuthorIsNotDefinedThenValidationFails() {
-        var book = new Book("1234567890", "Title", "", 9.90);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("Title")
+                .author("")
+                .price(9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -68,7 +93,12 @@ class BookValidationTest {
 
     @Test
     void whenPriceIsNotDefinedThenValidationFails() {
-        var book = new Book("1234567890", "Title", "Author", null);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("Title")
+                .author("Author")
+                .price(null)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -77,7 +107,12 @@ class BookValidationTest {
 
     @Test
     void whenPriceDefinedButZeroThenValidationFails() {
-        var book = new Book("1234567890", "Title", "Author", 0.0);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("Title")
+                .author("Author")
+                .price(0.0)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
@@ -86,7 +121,12 @@ class BookValidationTest {
 
     @Test
     void whenPriceDefinedButNegativeThenValidationFails() {
-        var book = new Book("1234567890", "Title", "Author", -9.90);
+        var book = Book.builder()
+                .isbn("1234567890")
+                .title("Title")
+                .author("Author")
+                .price(-9.90)
+                .build();
         Set<ConstraintViolation<Book>> violations = validator.validate(book);
         assertThat(violations).hasSize(1);
         List<String> messages = violations.stream().map(ConstraintViolation::getMessage).toList();
